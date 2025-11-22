@@ -1,0 +1,7 @@
+apiversion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: ns-dev
+data:
+  db_url: "jdbc:postgresql://counter-db:5432/counterdb"

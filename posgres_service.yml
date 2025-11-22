@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: counter-db
+  namespace: ns-dev
+spec:
+  selector:
+    app: counter-db
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432
