@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: counter-app
+  namespace: ns-dev
+  labels:
+    app: counter-app
+    version: v2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: counter-app
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: counter-app
+        version: v2
+    spec:
+      containers:
+        - name: app
+          image: prvnmora/counterapp:2.0.0  # Replace
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: db_url
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
